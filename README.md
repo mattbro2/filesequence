@@ -22,25 +22,43 @@ Sequential files are noted by a dash '-' and non sequential are noted by commas 
 ./fileseq [options]
 
   options
+
   -------
 
   -c string
+
     	Copy ie: fseq1.[01-10].jpg:fseq2.[01-10].jpg - cannot be a resequencing of same files
+
   -d string
+
     	Remove all files in sequence
+
   -f	Allow for overwriting of exiting files (destination cannot overwrite source unless using 'q' flag)
+
   -h	Print Help
+
   -help
+
     	Print Help
+
   -m string
+
     	Move ie: fseq1.[01-10].jpg:fseq2.[01-10].jpg
+
 	Move will result in original files being renamed. Source and dest must be different
+
   -n	Do not add colors to printed output
+
   -p string
+
     	Set directory to search (default "/Users/mattbro2/go/src/fileseq")
+
   -q string
+
     	Renumber a sequence of files ie: fseq1.[001-009].jpg:fseq1.[101-109].jpg
+
   -r string
+
     	Take a F_seq and expand to list of files (offline files are printed to terminal in red)
 
 
