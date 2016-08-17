@@ -78,7 +78,7 @@ go get github.com/mattbro2/fileseq
 
 ## API Reference
 
-TBD
+<a href="https://godoc.org/github.com/mattbro2/fileseq"><img src="https://godoc.org/github.com/mattbro2/fileseq?status.svg" alt="GoDoc"></a>
 
 ## License
 
