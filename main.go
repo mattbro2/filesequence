@@ -3,13 +3,14 @@ package main
 
 import (
 	"bufio"
-	"fileseq/commands"
-	"fileseq/core"
-	"fileseq/filesys"
 	"fmt"
 	"os"
 	"sort"
 	"strings"
+
+	"github.com/mattbro2/fileseq/commands"
+	"github.com/mattbro2/fileseq/core"
+	"github.com/mattbro2/fileseq/filesys"
 
 	"github.com/daviddengcn/go-colortext"
 )

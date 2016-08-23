@@ -5,13 +5,14 @@ import (
 	"bytes"
 	"crypto/md5"
 	"errors"
-	"fileseq/expanders"
-	"fileseq/filesys"
-	"fileseq/reducers"
 	"fmt"
 	"io"
 	"os"
 	"path/filepath"
+
+	"github.com/mattbro2/fileseq/expanders"
+	"github.com/mattbro2/fileseq/filesys"
+	"github.com/mattbro2/fileseq/reducers"
 )
 
 //Copy one sequence of files to another, force will allow overwriting.

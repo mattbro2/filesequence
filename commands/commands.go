@@ -2,12 +2,13 @@
 package commands
 
 import (
-	"fileseq/filesys"
 	"flag"
 	"fmt"
 	"io"
 	"os"
 	"strings"
+
+	"github.com/mattbro2/fileseq/filesys"
 )
 
 type Options struct {

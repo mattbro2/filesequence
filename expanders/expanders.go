@@ -4,12 +4,13 @@ package expanders
 
 import (
 	"errors"
-	"fileseq/filesys"
-	"fileseq/reducers"
 	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/mattbro2/fileseq/filesys"
+	"github.com/mattbro2/fileseq/reducers"
 )
 
 // Function to take a File_seq listing ie: "test.[001-005].jpg" and create a
