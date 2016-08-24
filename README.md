@@ -53,6 +53,7 @@ Sequential files are noted by a dash '-' and non sequential are noted by commas 
 		Move will result in original files being renamed. Source and dest must be different
 
   -n	
+
 		Do not add colors to printed output
 
   -p string
