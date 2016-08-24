@@ -99,6 +99,13 @@ To get a recursive sequence listing of a specific directory
 	/Users/jvoorhees/Sequences_images/test1_[0001-0003].jpg
 	/Users/jvoorhees/Sequences_images/onedepth/testoutlier.jpg
 	
+.... or you could just pass the directory by itself as an arg
+
+	> fileseq /Users/jvoorhees/Sequences_images
+	/Users/jvoorhees/Sequences_images/[0001-0003].jpg
+	/Users/jvoorhees/Sequences_images/nonseq.[01,03-05,10,15-17].jpg
+	/Users/jvoorhees/Sequences_imag....
+	
 To get a list of files that a fileseq listing contains (offline files will show in red unless "nocolor" flag is added)
 
 	> fileseq -r /Users/jvoorhees/Sequences_images/test1_[0001-0003].jpg
