@@ -33,9 +33,11 @@ Sequential files are noted by a dash '-' and non sequential are noted by commas 
 
     	Remove all files in sequence
 
-  -f	Allow for overwriting of exiting files (destination cannot overwrite source unless using 'q' flag)
+  -f	
+		Allow for overwriting of exiting files (destination cannot overwrite source unless using 'q' flag)
 
-  -h	Print Help
+  -h	
+		Print Help
 
   -help
 
@@ -45,9 +47,10 @@ Sequential files are noted by a dash '-' and non sequential are noted by commas 
 
     	Move ie: fseq1.[01-10].jpg:fseq2.[01-10].jpg
 
-	Move will result in original files being renamed. Source and dest must be different
+		Move will result in original files being renamed. Source and dest must be different
 
-  -n	Do not add colors to printed output
+  -n	
+		Do not add colors to printed output
 
   -p string
 
@@ -60,13 +63,76 @@ Sequential files are noted by a dash '-' and non sequential are noted by commas 
   -r string
 
     	Take a F_seq and expand to list of files (offline files are printed to terminal in red)
+		
+  -v 
+		
+		Send verbose output to stdout
 
 
 ## Code Example
 
-Using the command line is demonstrated above.
+The verbose flag is used for all of these examples.
 
-To use the code in your project, see the core/ReaMain.go which shows all of the base functions in action.
+To get a recursive sequence listing of your current directory
+
+	> fileseq -v
+	 1 directory scanned 
+	/Users/jvoorhees/Sequences_images/[0001-0003].jpg
+	/Users/jvoorhees/Sequences_images/nonseq.[01,03-05,10,15-17].jpg
+	/Users/mattbro2/Sequences_images/other_format [1001-1003].jpg
+	/Users/mattbro2/Sequences_images/realimg.[01-10].jpg
+	/Users/jvoorhees/Sequences_images/test1_[0001-0003].jpg
+	/Users/jvoorhees/Sequences_images/testoutlier.jpg
+	
+To get a recursive sequence listing of a specific directory
+
+	> fileseq -v -p /Users/jvoorhees/Sequences_images
+	 2 directories scanned    
+	/Users/jvoorhees/Sequences_images/[0001-0003].jpg
+	/Users/jvoorhees/Sequences_images/nonseq.[01,03-05,10,15-17].jpg
+	/Users/mattbro2/Sequences_images/other_format [1001-1003].jpg
+	/Users/mattbro2/Sequences_images/realimg.[01-10].jpg
+	/Users/jvoorhees/Sequences_images/test1_[0001-0003].jpg
+	/Users/jvoorhees/Sequences_images/onedepth/testoutlier.jpg
+	
+To get a list of files that a fileseq listing contains (offline files will show in red unless "nocolor" flag is added)
+
+	> fileseq -r /Users/jvoorhees/Sequences_images/test1_[0001-0003].jpg
+	/Users/jvoorhees/Sequences_images/test1_0001.jpg
+	/Users/jvoorhees/Sequences_images/test1_0002.jpg
+	/Users/jvoorhees/Sequences_images/test1_0003.jpg
+	
+To copy a sequence of files to another sequence of files
+
+	> fileseq -v -c /Users/jvoorhees/Sequences_images/test1_[0001-0003].jpg:/Users/jvoorhees/Sequences_images/copied1_[0001-0003].jpg
+	/Users/jvoorhees/Sequences_images/test1_0001.jpg -> /Users/jvoorhees/Sequences_images/copied1_0001.jpg
+	/Users/jvoorhees/Sequences_images/test1_0002.jpg -> /Users/jvoorhees/Sequences_images/copied1_0002.jpg
+	/Users/jvoorhees/Sequences_images/test1_0003.jpg -> /Users/jvoorhees/Sequences_images/copied1_0003.jpg
+
+Moving and renumbering work the same as the example above.  Note that unless you're using the force flag (-f) you can't move or copy over existing files.  If you're renumbering, however you can overwrite.
+
+To delete a sequence of files
+
+	> fileseq -v -d /Users/jvoorhees/Sequences_images/copied1_[0001-0003].jpg
+	This will remove your data, are you sure? [y/n]: 
+	y
+	deleting /Users/jvoorhees/Sequences_images/copied1_0001.jpg
+	deleting /Users/jvoorhees/Sequences_images/copied1_0002.jpg
+	deleting /Users/jvoorhees/Sequences_images/copied1_0003.jpg
+	
+## File sequences that do not conform to the four supported patterns
+
+File sequences are reduced and expanded based on two regexes:  one to identify and parse files that are potentially in a file sequence and one to identify and parse file sequence condensed listing.
+
+The supported file patterns are:
+
+<filename>.<number>.<ext>
+<filename> <number>.<ext>
+<filename>_<number>.<ext>
+<number>.<ext>
+
+If you are using a different convention for your sequential files, you can update the "seq_definition/seq_definition.go" file before you build your project and this will allow you to override the default patterns.  I have based these three default patterns based on my experience dealing with file sequences, however should you choose to add examples to it for patterns I may not be aware of, please contribute your regex (provided it works with the existing four) to the repo so that I may have broader support.
+
 
 ## Motivation
 

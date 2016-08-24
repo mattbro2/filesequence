@@ -17,7 +17,7 @@ import (
 
 //Copy one sequence of files to another, force will allow overwriting.
 //  Will perform md5 checksum validation post copy
-func CopySeq(fs string, fd string, force bool) error {
+func CopySeq(fs string, fd string, force bool, verbose bool) error {
 	fs_source, fs_err := expanders.Fseq_to_object(fs)
 	if fs_err != nil {
 		return fs_err
@@ -52,6 +52,9 @@ func CopySeq(fs string, fd string, force bool) error {
 		if err != nil {
 			return err
 		}
+		if verbose {
+			fmt.Printf("%s -> %s\n", files_source[i], files_dest[i])
+		}
 		if _, err := io.Copy(out, in); err != nil {
 			return err
 		}
@@ -65,7 +68,7 @@ func CopySeq(fs string, fd string, force bool) error {
 		}
 
 		if !bytes.Equal(source_md5, dest_md5) {
-			DeleteSeq(fd)
+			DeleteSeq(fd, true, verbose)
 			return errors.New("Destination files are not valid, backing out of copy.\n" +
 				"Please validate destination to ensure it is writable, ie disk full.\n" +
 				"Or possibly source file is larger than destination FS permits.")
@@ -76,7 +79,7 @@ func CopySeq(fs string, fd string, force bool) error {
 
 //Rename one sequence to another (not copy).  Original file names will not
 //  exist after the move
-func MoveSeq(fs string, fd string, force bool) error {
+func MoveSeq(fs string, fd string, force bool, verbose bool) error {
 	fs_source, fs_err := expanders.Fseq_to_object(fs)
 	if fs_err != nil {
 		return fs_err
@@ -97,6 +100,9 @@ func MoveSeq(fs string, fd string, force bool) error {
 	}
 
 	for i, _ := range files_source {
+		if verbose {
+			fmt.Printf("%s -> %s\n", files_source[i], files_dest[i])
+		}
 		mv_err := os.Rename(files_source[i], files_dest[i])
 		if mv_err != nil {
 			return mv_err
@@ -107,7 +113,7 @@ func MoveSeq(fs string, fd string, force bool) error {
 
 //Renumber a sequence of files, performs a copy to a temp dir, deletes the
 //  original files then renames them to the renumbered sequence
-func ReSeq(fs string, fd string) error {
+func ReSeq(fs string, fd string, verbose bool) error {
 	fs_source, fs_err := expanders.Fseq_to_object(fs)
 	if fs_err != nil {
 		return fs_err
@@ -127,17 +133,17 @@ func ReSeq(fs string, fd string) error {
 	temp_file := filepath.Base(fd)
 	temp_fd := fmt.Sprintf("%s/%s", temp_dir, temp_file)
 
-	cperr := CopySeq(fs, temp_fd, true)
+	cperr := CopySeq(fs, temp_fd, true, verbose)
 	if cperr != nil {
 		return fmt.Errorf("Unable to create temp files: %v\n", cperr)
 	}
 
-	rmerr := DeleteSeq(fs)
+	rmerr := DeleteSeq(fs, true, verbose)
 	if rmerr != nil {
 		return fmt.Errorf("Unable to remove original files: %v\n", rmerr)
 	}
 
-	mverr := MoveSeq(temp_fd, fd, false)
+	mverr := MoveSeq(temp_fd, fd, false, verbose)
 	if mverr != nil {
 		return fmt.Errorf("Unable to move renumbered files back to original location\nError was %v\nYou may recover original files here: %s", mverr, temp_fd)
 	}
@@ -146,7 +152,7 @@ func ReSeq(fs string, fd string) error {
 }
 
 //Delete the files from disk
-func DeleteSeq(fs string) error {
+func DeleteSeq(fs string, force bool, verbose bool) error {
 	fs_source, fs_err := expanders.Fseq_to_object(fs)
 	if fs_err != nil {
 		return fs_err
@@ -155,14 +161,20 @@ func DeleteSeq(fs string) error {
 	if files_err != nil {
 		return files_err
 	}
-	for _, x := range files_source {
-		isfile, _ := filesys.IsFile(x)
-		if !isfile {
-			return errors.New(fs_source.F_seq + " files to delete are not completely online\n")
+
+	if !force {
+		for _, x := range files_source {
+			isfile, _ := filesys.IsFile(x)
+			if !isfile {
+				return errors.New(fs_source.F_seq + " files to delete are not completely online\n")
+			}
 		}
 	}
 
 	for _, x := range files_source {
+		if verbose {
+			fmt.Printf("deleting %s\n", x)
+		}
 		rm_err := os.Remove(x)
 		if rm_err != nil {
 			return rm_err

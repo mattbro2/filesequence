@@ -20,6 +20,7 @@ type Options struct {
 	Reseq   string
 	Nocolor bool
 	Force   bool
+	Verbose bool
 }
 
 // InitCommands parses command line flags
@@ -34,6 +35,7 @@ func InitCommands(out io.Writer) Options {
 	reseq := ""
 	nocolor := false
 	force := false
+	verbose := false
 
 	flagset := flag.NewFlagSet(os.Args[0], flag.ExitOnError)
 	flagset.SetOutput(out)
@@ -48,6 +50,7 @@ func InitCommands(out io.Writer) Options {
 	flagset.StringVar(&deletef, "d", deletef, "Remove all files in sequence")
 	flagset.BoolVar(&nocolor, "n", false, "Do not add colors to printed output")
 	flagset.BoolVar(&force, "f", force, "Allow for overwriting of exiting files (destination cannot overwrite source unless using 'q' flag)")
+	flagset.BoolVar(&verbose, "v", verbose, "Send verbose output to stdout")
 	flagset.Parse(os.Args[1:])
 
 	if printUsage {
@@ -77,6 +80,7 @@ func InitCommands(out io.Writer) Options {
 		Reseq:   reseq,
 		Nocolor: nocolor,
 		Force:   force,
+		Verbose: verbose,
 	}
 
 	return o

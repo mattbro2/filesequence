@@ -11,12 +11,21 @@ import (
 
 	"github.com/mattbro2/fileseq/filesys"
 	"github.com/mattbro2/fileseq/reducers"
+	"github.com/mattbro2/fileseq/seq_definition"
 )
 
 // Function to take a File_seq listing ie: "test.[001-005].jpg" and create a
 // File_seq object out of it.
 func Fseq_to_object(files string) (reducers.File_seq, error) {
-	fs_regex, _ := regexp.Compile(`.*[\.\_\ ](\[[0-9-,]+\])\.`)
+	seq_def, err := seq_definition.SeqDefinition()
+	if err != nil {
+		return reducers.File_seq{}, err
+	}
+	fs_regex, reg_err := regexp.Compile(seq_def.ExpanderRegex)
+	if reg_err != nil {
+		return reducers.File_seq{}, reg_err
+	}
+
 	fs_listing := fs_regex.FindStringSubmatch(files)
 	file_num := make(map[int]string)
 	var file_list []int

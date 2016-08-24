@@ -24,12 +24,14 @@ func main() {
 		fseq, rvseq_err := core.ReverseSeqMain(options.Reverse)
 		if rvseq_err != nil {
 			fmt.Printf("Unable to create sequence from %s - %s\n", options.Reverse, rvseq_err)
+			os.Exit(1)
 			return
 		}
 
 		reverse, rev_err := core.ReverseMain(fseq)
 		if rev_err != nil {
 			fmt.Printf("Unable to list files from sequence %s - %s\n", options.Reverse, rev_err)
+			os.Exit(1)
 			return
 		}
 
@@ -56,11 +58,14 @@ func main() {
 		fs_split := strings.Split(options.Copy, ":")
 		if len(fs_split) != 2 {
 			fmt.Printf("-c param %s not two fseqs separated by ':'\n", options.Copy)
+			os.Exit(1)
 			return
 		}
-		err := core.CopySeqMain(fs_split[0], fs_split[1], options.Force)
+		err := core.CopySeqMain(fs_split[0], fs_split[1], options.Force, options.Verbose)
 		if err != nil {
 			fmt.Printf("Unable to copy files %s\n", err)
+			os.Exit(1)
+			return
 		}
 		return
 	}
@@ -70,11 +75,13 @@ func main() {
 		fs_split := strings.Split(options.Move, ":")
 		if len(fs_split) != 2 {
 			fmt.Printf("-c param %s not two fseqs separated by ':'\n", options.Move)
+			os.Exit(1)
 			return
 		}
-		err := core.MoveSeqMain(fs_split[0], fs_split[1], options.Force)
+		err := core.MoveSeqMain(fs_split[0], fs_split[1], options.Force, options.Verbose)
 		if err != nil {
 			fmt.Printf("Unable to move files %s\n", err)
+			os.Exit(1)
 		}
 		return
 	}
@@ -84,11 +91,13 @@ func main() {
 		fs_split := strings.Split(options.Reseq, ":")
 		if len(fs_split) != 2 {
 			fmt.Printf("-q param %s not two fseqs separated by ':'\n", options.Reseq)
+			os.Exit(1)
 			return
 		}
-		err := core.ReSeqMain(fs_split[0], fs_split[1])
+		err := core.ReSeqMain(fs_split[0], fs_split[1], options.Verbose)
 		if err != nil {
 			fmt.Printf("Unable to resequence files %s\n", err)
+			os.Exit(1)
 		}
 		return
 	}
@@ -100,26 +109,32 @@ func main() {
 			response, err := reader.ReadString('\n')
 			if err != nil {
 				fmt.Printf("error occurred %s", err)
+				os.Exit(1)
 				return
 			}
 			response = strings.ToLower(strings.TrimSpace(response))
 			if response != "y" {
 				fmt.Println("Not continuing with delete, reponse was not 'y'")
+				os.Exit(1)
 				return
 			}
 		}
-		err := core.DeleteSeqMain(options.Delete)
+		err := core.DeleteSeqMain(options.Delete, options.Force, options.Verbose)
 		if err != nil {
 			fmt.Printf("Error occurred %s ", err)
+			os.Exit(1)
+			return
 		}
 		return
 	}
 
 	//Default behavior of doing a file_seq listing
-	file_seqs, err := core.RealMain(options.Curdir)
+	file_seqs, err := core.ListMain(options.Curdir, options.Verbose)
 
 	if err != nil {
 		fmt.Println(err)
+		os.Exit(1)
+		return
 	}
 
 	var fmt_seqs []string

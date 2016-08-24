@@ -3,6 +3,7 @@
 package filesys
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -18,17 +19,28 @@ func Listdir(curdir string) ([]os.FileInfo, error) {
 	return files, err
 }
 
-func Recurse(curdir string) ([]string, error) {
+func Recurse(curdir string, verbose bool) ([]string, error) {
 	fileList := []string{}
+	labelname := "directory"
+	dirCount := 0
 	if _, oserr := os.Stat(curdir); oserr != nil {
 		return fileList, oserr
 	}
 	err := filepath.Walk(curdir, func(path string, f os.FileInfo, err error) error {
 		if !f.IsDir() {
 			fileList = append(fileList, path)
+		} else {
+			dirCount++
+			if verbose {
+				fmt.Printf("\r %d %s scanned                    ", dirCount, labelname)
+				labelname = "directories"
+			}
 		}
 		return err
 	})
+	if verbose {
+		fmt.Printf("\n")
+	}
 	return fileList, err
 }
 

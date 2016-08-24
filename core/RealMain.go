@@ -10,8 +10,8 @@ import (
 )
 
 //Call the functions and return the data and errors
-func RealMain(curdir string) ([]reducers.File_seq, error) {
-	files, rec_err := filesys.Recurse(curdir)
+func ListMain(curdir string, verbose bool) ([]reducers.File_seq, error) {
+	files, rec_err := filesys.Recurse(curdir, verbose)
 	reduced, red_err := reducers.ReduceBase(files)
 	file_seqs, fseq_err := reducers.ReduceFileseq(reduced)
 
@@ -40,22 +40,22 @@ func ReverseSeqMain(fs string) (reducers.File_seq, error) {
 	return fseq, err
 }
 
-func CopySeqMain(fs string, fd string, force bool) error {
-	err := seq_manip.CopySeq(fs, fd, force)
+func CopySeqMain(fs string, fd string, force bool, verbose bool) error {
+	err := seq_manip.CopySeq(fs, fd, force, verbose)
 	return err
 }
 
-func MoveSeqMain(fs string, fd string, force bool) error {
-	err := seq_manip.MoveSeq(fs, fd, force)
+func MoveSeqMain(fs string, fd string, force bool, verbose bool) error {
+	err := seq_manip.MoveSeq(fs, fd, force, verbose)
 	return err
 }
 
-func ReSeqMain(fs string, fd string) error {
-	err := seq_manip.ReSeq(fs, fd)
+func ReSeqMain(fs string, fd string, verbose bool) error {
+	err := seq_manip.ReSeq(fs, fd, verbose)
 	return err
 }
 
-func DeleteSeqMain(fs string) error {
-	err := seq_manip.DeleteSeq(fs)
+func DeleteSeqMain(fs string, force bool, verbose bool) error {
+	err := seq_manip.DeleteSeq(fs, force, verbose)
 	return err
 }

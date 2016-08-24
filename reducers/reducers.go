@@ -7,6 +7,8 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/mattbro2/fileseq/seq_definition"
 )
 
 // Struct for the File_seq object, contains the following:
@@ -30,8 +32,19 @@ type File_seq struct {
 
 //Function to take listing of files and create the base and file list
 func ReduceBase(files []string) (map[string]map[int]string, error) {
-	fr_number_regex, reg_err := regexp.Compile(`.*[\.\_\ ]([0-9]+)\.\w{2,4}$`)
+	fmt.Println()
 	bases := make(map[string]map[int]string)
+
+	seq_def, err := seq_definition.SeqDefinition()
+	if err != nil {
+		return bases, err
+	}
+
+	fr_number_regex, reg_err := regexp.Compile(seq_def.ReducerRegex)
+	if reg_err != nil {
+		return bases, reg_err
+	}
+
 	for _, f := range files {
 		frnum := fr_number_regex.FindStringSubmatch(f)
 		if len(frnum) == 0 {
