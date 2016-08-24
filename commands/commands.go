@@ -52,6 +52,9 @@ func InitCommands(out io.Writer) Options {
 	flagset.BoolVar(&force, "f", force, "Allow for overwriting of exiting files (destination cannot overwrite source unless using 'q' flag)")
 	flagset.BoolVar(&verbose, "v", verbose, "Send verbose output to stdout")
 	flagset.Parse(os.Args[1:])
+	if len(os.Args) < 3 && !printUsage && !strings.Contains(os.Args[1], `-`) {
+		curdir = os.Args[1]
+	}
 
 	if printUsage {
 		fmt.Fprintf(out, "\nA tool to condense sequences of files into a compact format. ie: fseq1.[1-10].jpg \n"+
