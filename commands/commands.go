@@ -62,8 +62,8 @@ func InitCommands(out io.Writer) Options {
 			"Lastly, you may pass the tool a 'reverse' lookup where you give it a compacted file sequence\n"+
 			"and it will turn it into a file_seq object and give you a list of files, indicating if any are\n"+
 			"offline in red.\n\n"+
-			"File sequences are detected by a file that ends with either a '.#.ext, ' #.ext', or '_#.ext' \n"+
-			"This may not match your naming convnetion, see the documentation in repo. \n\n"+
+			"File sequences are detected by a file that ends with either a '.#.ext, ' #.ext', or '_#.ext', or the files may be named just '#.ext'.\n"+
+			"This may not match your naming convnetion, see the documentation in README. \n\n"+
 			"Sequential files are noted by a dash '-' and non sequential are noted by commas ','."+
 			"\n\n%s [options]\n\n  options\n  -------\n\n", os.Args[0])
 		flagset.PrintDefaults()
