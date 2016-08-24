@@ -151,7 +151,10 @@ It becomes cumbersome to manage large numbers of sequential files.  Maintaining 
 
 ## Installation
 
+go get github.com/daviddengcn/go-colortext
 go get github.com/mattbro2/fileseq
+cd $GOPATH/github.com/mattbro2/fileseq
+go build
 
 ## API Reference
 
