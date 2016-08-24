@@ -79,8 +79,8 @@ To get a recursive sequence listing of your current directory
 	 1 directory scanned 
 	/Users/jvoorhees/Sequences_images/[0001-0003].jpg
 	/Users/jvoorhees/Sequences_images/nonseq.[01,03-05,10,15-17].jpg
-	/Users/mattbro2/Sequences_images/other_format [1001-1003].jpg
-	/Users/mattbro2/Sequences_images/realimg.[01-10].jpg
+	/Users/jvoorhees/Sequences_images/other_format [1001-1003].jpg
+	/Users/jvoorhees/Sequences_images/realimg.[01-10].jpg
 	/Users/jvoorhees/Sequences_images/test1_[0001-0003].jpg
 	/Users/jvoorhees/Sequences_images/testoutlier.jpg
 	
@@ -90,8 +90,8 @@ To get a recursive sequence listing of a specific directory
 	 2 directories scanned    
 	/Users/jvoorhees/Sequences_images/[0001-0003].jpg
 	/Users/jvoorhees/Sequences_images/nonseq.[01,03-05,10,15-17].jpg
-	/Users/mattbro2/Sequences_images/other_format [1001-1003].jpg
-	/Users/mattbro2/Sequences_images/realimg.[01-10].jpg
+	/Users/jvoorhees/Sequences_images/other_format [1001-1003].jpg
+	/Users/jvoorhees/Sequences_images/realimg.[01-10].jpg
 	/Users/jvoorhees/Sequences_images/test1_[0001-0003].jpg
 	/Users/jvoorhees/Sequences_images/onedepth/testoutlier.jpg
 	
