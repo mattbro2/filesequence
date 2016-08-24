@@ -151,6 +151,8 @@ It becomes cumbersome to manage large numbers of sequential files.  Maintaining 
 
 ## Installation
 
+Fileseq has a dependency on daviddengcn/go-colortext, see the go get command below.  Please file an issue with my project if there are any issues integrating this external project.
+
 	go get github.com/daviddengcn/go-colortext
 	go get github.com/mattbro2/fileseq
 	cd $GOPATH/github.com/mattbro2/fileseq
