@@ -126,10 +126,10 @@ File sequences are reduced and expanded based on two regexes:  one to identify a
 
 The supported file patterns are:
 
-<filename>.<number>.<ext>
-<filename> <number>.<ext>
-<filename>_<number>.<ext>
-<number>.<ext>
+filename.number.ext
+filename number.ext
+filename_number.ext
+number.ext
 
 If you are using a different convention for your sequential files, you can update the "seq_definition/seq_definition.go" file before you build your project and this will allow you to override the default patterns.  I have based these three default patterns based on my experience dealing with file sequences, however should you choose to add examples to it for patterns I may not be aware of, please contribute your regex (provided it works with the existing four) to the repo so that I may have broader support.
 
