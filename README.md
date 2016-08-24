@@ -28,7 +28,7 @@ Sequential files are noted by a dash '-' and non sequential are noted by commas 
 
   -c string
 
-    	Copy ie: fseq1.[01-10].jpg:fseq2.[01-10].jpg - cannot be a resequencing of same files
+    	Copy ie: fseq1.[01-10].jpg::fseq2.[01-10].jpg - cannot be a resequencing of same files
 
   -d string
 
@@ -48,7 +48,7 @@ Sequential files are noted by a dash '-' and non sequential are noted by commas 
 
   -m string
 
-    	Move ie: fseq1.[01-10].jpg:fseq2.[01-10].jpg
+    	Move ie: fseq1.[01-10].jpg::fseq2.[01-10].jpg
 
 		Move will result in original files being renamed. Source and dest must be different
 
@@ -62,7 +62,7 @@ Sequential files are noted by a dash '-' and non sequential are noted by commas 
 
   -q string
 
-    	Renumber a sequence of files ie: fseq1.[001-009].jpg:fseq1.[101-109].jpg
+    	Renumber a sequence of files ie: fseq1.[001-009].jpg::fseq1.[101-109].jpg
 
   -r string
 
@@ -115,7 +115,7 @@ To get a list of files that a fileseq listing contains (offline files will show 
 	
 To copy a sequence of files to another sequence of files
 
-	> fileseq -v -c /Users/jvoorhees/Sequences_images/test1_[0001-0003].jpg:/Users/jvoorhees/Sequences_images/copied1_[0001-0003].jpg
+	> fileseq -v -c /Users/jvoorhees/Sequences_images/test1_[0001-0003].jpg::/Users/jvoorhees/Sequences_images/copied1_[0001-0003].jpg
 	/Users/jvoorhees/Sequences_images/test1_0001.jpg -> /Users/jvoorhees/Sequences_images/copied1_0001.jpg
 	/Users/jvoorhees/Sequences_images/test1_0002.jpg -> /Users/jvoorhees/Sequences_images/copied1_0002.jpg
 	/Users/jvoorhees/Sequences_images/test1_0003.jpg -> /Users/jvoorhees/Sequences_images/copied1_0003.jpg

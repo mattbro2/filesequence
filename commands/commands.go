@@ -43,10 +43,10 @@ func InitCommands(out io.Writer) Options {
 	flagset.BoolVar(&printUsage, "help", false, "Print Help")
 	flagset.StringVar(&curdir, "p", curdir, "Set directory to search")
 	flagset.StringVar(&reverse, "r", "", "Take a F_seq and expand to list of files (offline files are printed to terminal in red)")
-	flagset.StringVar(&copyf, "c", copyf, "Copy ie: fseq1.[01-10].jpg:fseq2.[01-10].jpg - cannot be a resequencing of same files")
-	flagset.StringVar(&move, "m", move, "Move ie: fseq1.[01-10].jpg:fseq2.[01-10].jpg\n\t"+
+	flagset.StringVar(&copyf, "c", copyf, "Copy ie: fseq1.[01-10].jpg::fseq2.[01-10].jpg - cannot be a resequencing of same files")
+	flagset.StringVar(&move, "m", move, "Move ie: fseq1.[01-10].jpg::fseq2.[01-10].jpg\n\t"+
 		"Move will result in original files being renamed. Source and dest must be different")
-	flagset.StringVar(&reseq, "q", reseq, "Renumber a sequence of files ie: fseq1.[001-009].jpg:fseq1.[101-109].jpg")
+	flagset.StringVar(&reseq, "q", reseq, "Renumber a sequence of files ie: fseq1.[001-009].jpg::fseq1.[101-109].jpg")
 	flagset.StringVar(&deletef, "d", deletef, "Remove all files in sequence")
 	flagset.BoolVar(&nocolor, "n", false, "Do not add colors to printed output")
 	flagset.BoolVar(&force, "f", force, "Allow for overwriting of exiting files (destination cannot overwrite source unless using 'q' flag)")

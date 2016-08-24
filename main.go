@@ -55,9 +55,9 @@ func main() {
 
 	//Copy one File_seq to another
 	if options.Copy != "" {
-		fs_split := strings.Split(options.Copy, ":")
+		fs_split := strings.Split(options.Copy, "::")
 		if len(fs_split) != 2 {
-			fmt.Printf("-c param %s not two fseqs separated by ':'\n", options.Copy)
+			fmt.Printf("-c param %s not two fseqs separated by '::'\n", options.Copy)
 			os.Exit(1)
 			return
 		}
@@ -72,9 +72,9 @@ func main() {
 
 	//Move from one file_seq to another
 	if options.Move != "" {
-		fs_split := strings.Split(options.Move, ":")
+		fs_split := strings.Split(options.Move, "::")
 		if len(fs_split) != 2 {
-			fmt.Printf("-c param %s not two fseqs separated by ':'\n", options.Move)
+			fmt.Printf("-c param %s not two fseqs separated by '::'\n", options.Move)
 			os.Exit(1)
 			return
 		}
@@ -88,9 +88,9 @@ func main() {
 
 	//Renumber a sequence of files, will allow overwriting
 	if options.Reseq != "" {
-		fs_split := strings.Split(options.Reseq, ":")
+		fs_split := strings.Split(options.Reseq, "::")
 		if len(fs_split) != 2 {
-			fmt.Printf("-q param %s not two fseqs separated by ':'\n", options.Reseq)
+			fmt.Printf("-q param %s not two fseqs separated by '::'\n", options.Reseq)
 			os.Exit(1)
 			return
 		}
