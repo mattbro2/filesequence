@@ -39,7 +39,6 @@ func CopySeq(fs string, fd string, force bool, verbose bool) error {
 	}
 
 	for i, _ := range files_source {
-		buf := make([]byte, 8)
 		in, err := os.Open(files_source[i])
 		if err != nil {
 			return err
@@ -57,7 +56,7 @@ func CopySeq(fs string, fd string, force bool, verbose bool) error {
 		if verbose {
 			fmt.Printf("%s -> %s\n", files_source[i], files_dest[i])
 		}
-		if _, err := io.CopyBuffer(out, in, buf); err != nil {
+		if _, err := io.Copy(out, in); err != nil {
 			return err
 		}
 		sync_error := out.Sync()
