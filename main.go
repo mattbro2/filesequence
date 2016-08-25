@@ -15,7 +15,7 @@ import (
 	"github.com/daviddengcn/go-colortext"
 )
 
-// main entry point for the file sequencer comand line.  Will print to stdout
+//main entry point for the file sequencer comand line.  Will print to stdout
 func main() {
 	options := commands.InitCommands(os.Stdout)
 	reader := bufio.NewReader(os.Stdin)

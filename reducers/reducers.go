@@ -11,17 +11,17 @@ import (
 	"github.com/mattbro2/fileseq/seq_definition"
 )
 
-// Struct for the File_seq object, contains the following:
-// Base is the file with the file numbers replaced with '@'
-//    Base detects files with numbering schema such as:
-//       filename.1001.jpg
-//       filename_1001.jpg
-//       filename 1001.jpg
-// File_num is a map of map[<int of file number>]<string of file num>
-// File_list is ordered array of file number integers
-// F_seq is the condensed listing of file sequence with file numbers listed
-//  inside brackets such as:  test.[001-003].jpg
-//  Non continuous sequence:  nonseq.[01,03-05,10,15-17].jpg
+//Struct for the File_seq object, contains the following:
+//-Base is the file with the file numbers replaced with '@'
+//--Base detects files with numbering schema such as:
+//---filename.1001.jpg
+//---filename_1001.jpg
+//---filename 1001.jpg
+//File_num is a map of map[<int of file number>]<string of file num>
+//File_list is ordered array of file number integers
+//F_seq is the condensed listing of file sequence with file numbers listed
+//inside brackets such as:  test.[001-003].jpg
+//Non continuous sequence:  nonseq.[01,03-05,10,15-17].jpg
 type File_seq struct {
 	Base      string
 	File_num  map[int]string

@@ -9,7 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"encoding/hex"
+	"bytes"
 
 	"github.com/mattbro2/fileseq/expanders"
 	"github.com/mattbro2/fileseq/filesys"
@@ -17,7 +17,7 @@ import (
 )
 
 //Copy one sequence of files to another, force will allow overwriting.
-//  Will perform md5 checksum validation post copy
+//Will perform md5 checksum validation post copy
 func CopySeq(fs string, fd string, force bool, verbose bool) error {
 	fs_source, fs_err := expanders.Fseq_to_object(fs)
 	if fs_err != nil {
@@ -74,7 +74,7 @@ func CopySeq(fs string, fd string, force bool, verbose bool) error {
 			return close_err
 		}
 
-		if source_md5 != dest_md5 {
+		if !bytes.Equal(source_md5, dest_md5) {
 			if verbose {
 				fmt.Printf("source checksum %v", source_md5)
 				fmt.Printf("dest checksum %v", dest_md5)
@@ -88,8 +88,7 @@ func CopySeq(fs string, fd string, force bool, verbose bool) error {
 	return nil
 }
 
-//Rename one sequence to another (not copy).  Original file names will not
-//  exist after the move
+//Rename one sequence to another (not copy).  Original file names will not exist after the move
 func MoveSeq(fs string, fd string, force bool, verbose bool) error {
 	fs_source, fs_err := expanders.Fseq_to_object(fs)
 	if fs_err != nil {
@@ -123,7 +122,7 @@ func MoveSeq(fs string, fd string, force bool, verbose bool) error {
 }
 
 //Renumber a sequence of files, performs a copy to a temp dir, deletes the
-//  original files then renames them to the renumbered sequence
+//original files then renames them to the renumbered sequence
 func ReSeq(fs string, fd string, verbose bool) error {
 	fs_source, fs_err := expanders.Fseq_to_object(fs)
 	if fs_err != nil {
@@ -205,7 +204,7 @@ func MakeDir(pth string) error {
 }
 
 //Take in File_seq objects and return slices of individual files, also check for inconsistencies between file_seqs
-//  such as differet lengths, source files being offline or destition files being online.  Tool does not allow for overwriting
+//such as differet lengths, source files being offline or destition files being online.  Tool does not allow for overwriting
 func FormatFileLists(fs_source reducers.File_seq, fs_dest reducers.File_seq, force bool) ([]string, []string, error) {
 	if len(fs_source.File_list) != len(fs_dest.File_list) {
 		return []string{}, []string{}, errors.New(fs_source.F_seq + " and " + fs_dest.F_seq +
@@ -242,14 +241,12 @@ func FormatFileLists(fs_source reducers.File_seq, fs_dest reducers.File_seq, for
 }
 
 //Create a md5 hash, used for validating copy
-func hash_file_md5(file *os.File) (string, error) {
-	var md5string string
+func hash_file_md5(file *os.File) ([]byte, error) {
 	hash := md5.New()
 	if _, err := io.Copy(hash, file); err != nil {
-		return md5string, err
+		return []byte{}, err
 	}
 	hashInBytes := hash.Sum(nil)[:16]
-	md5string = hex.EncodeToString(hashInBytes)
-	return md5string, nil
+	return hashInBytes, nil
 
 }

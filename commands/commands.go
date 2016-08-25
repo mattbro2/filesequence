@@ -1,4 +1,4 @@
-// Package commands contains the code to process the service flags and commands
+//Package commands contains the code to process the service flags and commands
 package commands
 
 import (
@@ -23,8 +23,8 @@ type Options struct {
 	Verbose bool
 }
 
-// InitCommands parses command line flags
-// updates global options
+//InitCommands parses command line flags
+//updates global options
 func InitCommands(out io.Writer) Options {
 	printUsage := false
 	curdir := filesys.Curdir()

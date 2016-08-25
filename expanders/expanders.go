@@ -1,5 +1,5 @@
 //Package expanders used to generate Fseq objects from a Fseq listing
-// or to take an fseq and return the expanded list of files
+//or to take an fseq and return the expanded list of files
 package expanders
 
 import (
@@ -14,8 +14,8 @@ import (
 	"github.com/mattbro2/fileseq/seq_definition"
 )
 
-// Function to take a File_seq listing ie: "test.[001-005].jpg" and create a
-// File_seq object out of it.
+//Function to take a File_seq listing ie: "test.[001-005].jpg" and create a
+//File_seq object out of it.
 func Fseq_to_object(files string) (reducers.File_seq, error) {
 	seq_def, err := seq_definition.SeqDefinition()
 	if err != nil {

@@ -1,5 +1,5 @@
-// Package to abstract finding the current directory, Listing the current directory
-// and recursing through given directory
+//Package to abstract finding the current directory, Listing the current directory
+//and recursing through given directory
 package filesys
 
 import (
@@ -9,16 +9,19 @@ import (
 	"path/filepath"
 )
 
+//Return the current directory
 func Curdir() string {
 	curdir, _ := os.Getwd()
 	return curdir
 }
 
+//List contents of directory
 func Listdir(curdir string) ([]os.FileInfo, error) {
 	files, err := ioutil.ReadDir(curdir)
 	return files, err
 }
 
+//Walk directory and return slice of all files with absolute paths
 func Recurse(curdir string, verbose bool) ([]string, error) {
 	fileList := []string{}
 	labelname := "directory"
@@ -44,6 +47,7 @@ func Recurse(curdir string, verbose bool) ([]string, error) {
 	return fileList, err
 }
 
+//Test if string is a real file
 func IsFile(file string) (bool, error) {
 	f, open_err := os.Open(file)
 	if open_err != nil {
