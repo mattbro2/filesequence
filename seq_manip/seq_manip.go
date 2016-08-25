@@ -2,13 +2,14 @@
 package seq_manip
 
 import (
-	"bytes"
 	"crypto/md5"
 	"errors"
 	"fmt"
 	"io"
 	"os"
 	"path/filepath"
+
+	"encoding/hex"
 
 	"github.com/mattbro2/fileseq/expanders"
 	"github.com/mattbro2/fileseq/filesys"
@@ -67,7 +68,7 @@ func CopySeq(fs string, fd string, force bool, verbose bool) error {
 			return close_err
 		}
 
-		if !bytes.Equal(source_md5, dest_md5) {
+		if source_md5 != dest_md5 {
 			if verbose {
 				fmt.Printf("source checksum %v", source_md5)
 				fmt.Printf("dest checksum %v", dest_md5)
@@ -235,12 +236,14 @@ func FormatFileLists(fs_source reducers.File_seq, fs_dest reducers.File_seq, for
 }
 
 //Create a md5 hash, used for validating copy
-func hash_file_md5(file *os.File) ([]byte, error) {
+func hash_file_md5(file *os.File) (string, error) {
+	var md5string string
 	hash := md5.New()
 	if _, err := io.Copy(hash, file); err != nil {
-		return []byte{}, err
+		return md5string, err
 	}
 	hashInBytes := hash.Sum(nil)[:16]
-	return hashInBytes, nil
+	md5string = hex.EncodeToString(hashInBytes)
+	return md5string, nil
 
 }
