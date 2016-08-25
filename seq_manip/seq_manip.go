@@ -59,10 +59,16 @@ func CopySeq(fs string, fd string, force bool, verbose bool) error {
 		if _, err := io.Copy(out, in); err != nil {
 			return err
 		}
+		sync_error := out.Sync()
+		if sync_error != nil {
+			return fmt.Errorf("Error syncing file %v", sync_error)
+		}
+
 		dest_md5, hash_err := hash_file_md5(out)
 		if hash_err != nil {
 			return fmt.Errorf("Unable to generate checksum for source: %v", hash_err)
 		}
+
 		close_err := out.Close()
 		if close_err != nil {
 			return close_err
