@@ -68,6 +68,10 @@ func CopySeq(fs string, fd string, force bool, verbose bool) error {
 		}
 
 		if !bytes.Equal(source_md5, dest_md5) {
+			if verbose {
+				fmt.Printf("source checksum %v", source_md5)
+				fmt.Printf("dest checksum %v", dest_md5)
+			}
 			DeleteSeq(fd, true, verbose)
 			return errors.New("Destination files are not valid, backing out of copy.\n" +
 				"Please validate destination to ensure it is writable, ie disk full.\n" +
