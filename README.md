@@ -1,6 +1,6 @@
 ## Synopsis
 
-**FileSeq**
+**FileSequence**
 
 A tool to condense sequences of files into a compact format. ie: fseq1.[1-10].jpg 
 where the first file in sequence is fseq1.01.jpg
