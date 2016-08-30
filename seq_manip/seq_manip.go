@@ -2,6 +2,7 @@
 package seq_manip
 
 import (
+	"bufio"
 	"crypto/md5"
 	"errors"
 	"fmt"
@@ -43,6 +44,7 @@ func CopySeq(fs string, fd string, force bool, verbose bool) error {
 		if err != nil {
 			return err
 		}
+		reader := bufio.NewReader(in)
 		defer in.Close()
 		source_md5, hash_err := hash_file_md5(in)
 		if hash_err != nil {
@@ -53,25 +55,51 @@ func CopySeq(fs string, fd string, force bool, verbose bool) error {
 		if err != nil {
 			return err
 		}
+		writer := bufio.NewWriter(out)
+		buf := make([]byte, 1024)
+		defer func() {
+			if err := out.Close(); err != nil {
+				//DeleteSeq(fd, true, verbose)
+				return fmt.Errorf("Unable to close new file, backing out of copy %v", err)
+			}
+		}()
+
 		if verbose {
 			fmt.Printf("%s -> %s\n", files_source[i], files_dest[i])
 		}
-		if _, err := io.Copy(out, in); err != nil {
-			return err
+
+		for {
+			n, rerr := reader.Read(buf)
+			if rerr != nil && rerr != io.EOF {
+				//DeleteSeq(fd, true, verbose)
+				return fmt.Errorf("Unable to read file %s - %v", files_source[i], rerr)
+			}
+			if n == 0 {
+				break
+			}
+			if _, werr := writer.Write(buf[:n]); werr != nil {
+				//DeleteSeq(fd, true, verbose)
+				return fmt.Errorf("Unable to write file %s - %v", files_dest[i], werr)
+			}
 		}
-		sync_error := out.Sync()
-		if sync_error != nil {
-			return fmt.Errorf("Error syncing file %v", sync_error)
+
+		if ferr := writer.Flush(); ferr != nil {
+			//DeleteSeq(fd, true, verbose)
+			return fmt.Errorf("Unable to complete copy of file %s - %v", files_dest[i], werr)
 		}
+
+		//if _, err := io.Copy(out, in); err != nil {
+		//	return err
+		//}
+		//sync_error := out.Sync()
+		//if sync_error != nil {
+		//	return fmt.Errorf("Error syncing file %v", sync_error)
+		//}
 
 		dest_md5, hash_err := hash_file_md5(out)
 		if hash_err != nil {
+			//DeleteSeq(fd, true, verbose)
 			return fmt.Errorf("Unable to generate checksum for source: %v", hash_err)
-		}
-
-		close_err := out.Close()
-		if close_err != nil {
-			return close_err
 		}
 
 		if !bytes.Equal(source_md5, dest_md5) {
@@ -79,7 +107,7 @@ func CopySeq(fs string, fd string, force bool, verbose bool) error {
 				fmt.Printf("source checksum %v", source_md5)
 				fmt.Printf("dest checksum %v", dest_md5)
 			}
-			DeleteSeq(fd, true, verbose)
+			//DeleteSeq(fd, true, verbose)
 			return errors.New("Destination files are not valid, backing out of copy.\n" +
 				"Please validate destination to ensure it is writable, ie disk full.\n" +
 				"Or possibly source file is larger than destination FS permits.")
