@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mattbro2/fileseq/seq_definition"
+	"github.com/mattbro2/filesequence/seq_definition"
 )
 
 //Struct for the File_seq object, contains the following:

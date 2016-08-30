@@ -9,9 +9,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mattbro2/fileseq/filesys"
-	"github.com/mattbro2/fileseq/reducers"
-	"github.com/mattbro2/fileseq/seq_definition"
+	"github.com/mattbro2/filesequence/filesys"
+	"github.com/mattbro2/filesequence/reducers"
+	"github.com/mattbro2/filesequence/seq_definition"
 )
 
 //Function to take a File_seq listing ie: "test.[001-005].jpg" and create a

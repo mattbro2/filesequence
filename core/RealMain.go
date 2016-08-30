@@ -3,10 +3,10 @@
 package core
 
 import (
-	"github.com/mattbro2/fileseq/expanders"
-	"github.com/mattbro2/fileseq/filesys"
-	"github.com/mattbro2/fileseq/reducers"
-	"github.com/mattbro2/fileseq/seq_manip"
+	"github.com/mattbro2/filesequence/expanders"
+	"github.com/mattbro2/filesequence/filesys"
+	"github.com/mattbro2/filesequence/reducers"
+	"github.com/mattbro2/filesequence/seq_manip"
 )
 
 //Call the functions and return the data and errors

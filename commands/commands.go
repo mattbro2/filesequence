@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/mattbro2/fileseq/filesys"
+	"github.com/mattbro2/filesequence/filesys"
 )
 
 type Options struct {

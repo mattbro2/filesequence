@@ -11,9 +11,9 @@ import (
 
 	"bytes"
 
-	"github.com/mattbro2/fileseq/expanders"
-	"github.com/mattbro2/fileseq/filesys"
-	"github.com/mattbro2/fileseq/reducers"
+	"github.com/mattbro2/filesequence/expanders"
+	"github.com/mattbro2/filesequence/filesys"
+	"github.com/mattbro2/filesequence/reducers"
 )
 
 //Copy one sequence of files to another, force will allow overwriting.

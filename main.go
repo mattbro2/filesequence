@@ -1,4 +1,4 @@
-//Package fileseq will compact a sequence of files into a single line representing the sequence
+//Package filesequence will compact a sequence of files into a single line representing the sequence
 package main
 
 import (
@@ -8,9 +8,9 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/mattbro2/fileseq/commands"
-	"github.com/mattbro2/fileseq/core"
-	"github.com/mattbro2/fileseq/filesys"
+	"github.com/mattbro2/filesequence/commands"
+	"github.com/mattbro2/filesequence/core"
+	"github.com/mattbro2/filesequence/filesys"
 
 	"github.com/daviddengcn/go-colortext"
 )
