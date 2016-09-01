@@ -57,11 +57,12 @@ func CopySeq(fs string, fd string, force bool, verbose bool) error {
 		}
 		writer := bufio.NewWriter(out)
 		buf := make([]byte, 1024)
-		defer func() {
+		defer func() error {
 			if err := out.Close(); err != nil {
 				//DeleteSeq(fd, true, verbose)
 				return fmt.Errorf("Unable to close new file, backing out of copy %v", err)
 			}
+			return nil
 		}()
 
 		if verbose {
@@ -85,7 +86,7 @@ func CopySeq(fs string, fd string, force bool, verbose bool) error {
 
 		if ferr := writer.Flush(); ferr != nil {
 			//DeleteSeq(fd, true, verbose)
-			return fmt.Errorf("Unable to complete copy of file %s - %v", files_dest[i], werr)
+			return fmt.Errorf("Unable to complete copy of file %s - %v", files_dest[i], ferr)
 		}
 
 		//if _, err := io.Copy(out, in); err != nil {

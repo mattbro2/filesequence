@@ -51,13 +51,14 @@ func ReduceBase(files []string) (map[string]map[int]string, error) {
 			bases[f] = make(map[int]string)
 			bases[f][0] = "0"
 		} else {
-			repl := strings.Replace(f, frnum[1], `@`, 1)
-			ifrnum, _ := strconv.Atoi(frnum[1])
+			stub := fmt.Sprintf(`%v@.%v`, frnum[2], frnum[4])
+			repl := strings.Replace(f, frnum[1], stub, 1)
+			ifrnum, _ := strconv.Atoi(frnum[3])
 			_, ok := bases[repl]
 			if !ok {
 				bases[repl] = make(map[int]string)
 			}
-			bases[repl][ifrnum] = frnum[1]
+			bases[repl][ifrnum] = frnum[3]
 		}
 	}
 	return bases, reg_err
